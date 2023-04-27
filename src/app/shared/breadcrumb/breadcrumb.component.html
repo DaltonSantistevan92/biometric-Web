@@ -1,0 +1,14 @@
+
+   
+<div class="pagetitle">
+    <h1>{{ titulo | titlecase }}</h1>
+    <nav>
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let nl of newListaUrl">
+            <a>{{  nl | titlecase}}</a>
+        </li>
+        </ol>
+    </nav>
+</div> 
+  
+
