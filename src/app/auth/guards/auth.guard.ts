@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
      return this._authSer.verificacionAutenticacion()
       .pipe(tap(estaAutenticado => {  
           if (!estaAutenticado) {
-              //localStorage.removeItem('token');
+              localStorage.removeItem('token');
               this.router.navigate(['/login']);
           }
       })

@@ -1,45 +1,46 @@
-
 <nav class="header-nav ms-auto">
-    <ul class="d-flex align-items-center">
+  <ul class="d-flex align-items-center">
 
-   
-      
-      <li class="nav-item dropdown pe-3">
+    <li class="nav-item dropdown pe-3">
+      <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+        <ng-container *ngIf="user">
+          <span class="d-none d-md-block dropdown-toggle ps-2">
+            <b> {{ user.persona.nombres }} {{ user.persona.apellidos }} </b>
+          </span>
+        </ng-container>
+      </a>
 
-        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-          <span class="d-none d-md-block dropdown-toggle ps-2">C</span>
-        </a>
-
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+        <ng-container *ngIf="user">
           <li class="dropdown-header">
-            <h6>{{nombre_usuario}}</h6>
-            <span>{{nombre_rol}}</span>
+            <h6> {{ user.persona.nombres }} {{ user.persona.apellidos }} </h6>
+            <span> {{ user.rol.cargo }} </span>
           </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
+        </ng-container>
+        
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <a class="dropdown-item d-flex align-items-center" (click)="modalPerfil()">
+            <i class="bi bi-person"></i>
+            <span>Mi Perfil</span>
+          </a>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <a (click)="salir()" class="dropdown-item d-flex align-items-center" href="#">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Cerrar sesión</span>
+          </a>
+        </li>
+      </ul>
 
-          <li>
-            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-              <i class="bi bi-person"></i>
-              <span>My perfil</span>
-            </a>
-          </li>        
-          
-          <li>
-            <hr class="dropdown-divider">
-          </li>
+    </li>
 
-          <li>
-            <a class="dropdown-item d-flex align-items-center" href="#">
-              <i class="bi bi-box-arrow-right"></i>
-              <span>Cerrar sesión</span>
-            </a>
-          </li>
 
-        </ul>
-      </li>
-
-    </ul>
-  </nav>
+  </ul>
+</nav>

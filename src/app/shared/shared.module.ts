@@ -5,13 +5,16 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavComponent } from './nav/nav.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { MaterialsModule } from '../materials/materials.module';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
   declarations: [
     SidebarComponent,
     NavComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    PerfilComponent
   ],
   exports : [
     SidebarComponent,
@@ -20,7 +23,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    MaterialsModule
   ]
 })
 export class SharedModule { }

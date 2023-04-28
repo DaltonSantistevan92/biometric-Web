@@ -8,8 +8,12 @@ import { NoPageFoundComponent } from './components/no-page-found/no-page-found.c
 
 //modulos
 import { AuthModule } from './auth/auth.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
+
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { AuthInterceptorService } from './interceptor/auth-interceptor.service';
 
 
 @NgModule({
@@ -22,9 +26,14 @@ import { PagesModule } from './pages/pages.module';
     AppRoutingModule,
     HttpClientModule,
     AuthModule,
-    PagesModule
+    PagesModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    { provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true },//inyectamos el interceptor 
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService //permitir decodificar y decodificar token 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

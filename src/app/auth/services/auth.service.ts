@@ -4,65 +4,73 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 
+import { JwtHelperService} from '@auth0/angular-jwt';
+import decode from 'jwt-decode'
+import { IntAuth, IntDataUser, IntPayload } from '../interfaces/auth-interface';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _listaMenus : any [] = [];  //lista de menus
+  //private _listaMenus : any [] = [];  //lista de menus
 
-  get menu(): any { //getter de menu
+  /* get menu(): any { //getter de menu
     return [...this._listaMenus];
-  }
+  } */
+
+  public decodificar! : IntPayload;
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return JSON.parse(localStorage.getItem('token')!) || '';
   } 
 
-  private objSourceUser = new BehaviorSubject<{}>({});
-  $getObjSourceUser = this.objSourceUser.asObservable();
+  get tokenDecodificado() : IntPayload {
+    return this.decodificar = decode(this.token);
+  }
 
+  private objSourcePayload = new BehaviorSubject<IntPayload>({} as IntPayload);
+  public readonly $getObjSourcePayload : Observable<IntPayload> = this.objSourcePayload.asObservable();
 
   constructor(
     private route: Router,    
-    private http: HttpClient
+    private http: HttpClient,
+    private jwtHelper:JwtHelperService,
+
   ) { }
 
   api = environment.apiUrl;
 
   verificacionAutenticacion():Observable<boolean>{
-    const token = localStorage.getItem('token');
-
-    if (!token) { return of(false); }//this.jwtHelper.isTokenExpired(token) ||
+    if (this.jwtHelper.isTokenExpired(this.token) || !this.token) { return of(false); }
     return of(true);
   }
 
 
-  login(data:any): Observable<any>{
-    const url = `${this.api}/login`;
-    return this.http.post<any>(url,data)
+  login(data:IntDataUser): Observable<IntAuth>{
+    const url = `${this.api}/loginWeb`;
+    return this.http.post<IntAuth>(url,data)
     .pipe(tap( (resp) => {
-        if (resp.token && resp.user) {//&& resp.menu.length > 0
-          this.setLocalStorage('token', resp.token);
-          
-          this.sendObjeUser(resp.user);
-          this.setLocalStorage('user', resp.user);
-
-          //this._listaMenus = resp.menu; // recuperamos el menu y lo igualmos a la lista
-          //localStorage.setItem('menu', JSON.stringify(this._listaMenus));
-        }else{
-          return;
-        }
-      })
+      if (resp.status) {
+        this.setLocalStorage('token',resp.token);
+        this.decodificar = decode(resp.token);
+        this.sendObjePayload(this.decodificar); 
+      }
+    })
     );
   }
 
-  sendObjeUser(data:any){
-    this.objSourceUser.next(data);
+  sendObjePayload(data:IntPayload){
+    this.objSourcePayload.next(data);
   }
 
-  setLocalStorage(key:string, data : any){
-    localStorage.setItem(key, JSON.stringify(data));
+  setLocalStorage( key:string, token:string ){
+    localStorage.setItem(key, JSON.stringify(token));
+  }
+
+  deleteLocalStorage( key:string ){
+    localStorage.removeItem(key);
   }
 
 

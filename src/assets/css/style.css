@@ -1,10 +1,4 @@
-/**
-* Template Name: NiceAdmin
-* Updated: Mar 09 2023 with Bootstrap v5.2.3
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+
 
 /*--------------------------------------------------------------
 # General
@@ -106,7 +100,7 @@ h6 {
 /* Dropdown menus */
 .dropdown-menu {
   border-radius: 4px;
-  padding: 10px 0;
+  /* padding: 10px 0; */
   animation-name: dropdown-animate;
   animation-duration: 0.2s;
   animation-fill-mode: both;

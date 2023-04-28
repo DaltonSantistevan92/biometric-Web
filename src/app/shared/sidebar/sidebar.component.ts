@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Menu } from 'src/app/auth/interfaces/auth-interface';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,12 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input() menu : any[] = [];
+  @Input() menu : Menu[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.menu);
     
   }
 

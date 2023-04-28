@@ -1,93 +1,40 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AuthService } from '../auth/services/auth.service';
+import { Subscription } from 'rxjs';
+import { Menu, User } from '../auth/interfaces/auth-interface';
 
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.scss']
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements OnInit, OnDestroy  {
 
   @ViewChild('me') me!:ElementRef<HTMLElement>;
 
+  public user!: User;
+  public menu : Menu [] = [];
+  private payloadServiceSubscription: Subscription | undefined;
+
   constructor(
-    private renderer : Renderer2
+    private renderer : Renderer2,
+    private _auSer : AuthService
+
   ) { }
 
-  user: any[] = [
-
-    {
-      user: [
-        {
-          id: 1,
-          usuario: "CarlossRreyes98",
-          nombres: "Carloss Rreyes",
-          apellidos: "Ricardo Reyes" ,      
-
-        }
-    
-
-      ],
-      rol: [
-        {
-          id: 1, 
-          cargo: "Administrador",
-          estado: "A"
-
-        }
-      ]
-    }
-
-  ];
-
-  menu : any [] = [
-    {
-      id: 1,
-      nombre : 'Dashboard',
-      url : 'dashboard',
-      icono : 'bi bi-grid',
-      menu_hijo : []
-    },
-    {
-      id: 2,
-      nombre : 'Departamento',
-      url : 'departamento',
-      icono : 'bi bi-bar-chart',
-      menu_hijo : [
-        {
-          sub_menu : 'Nuevo Departamento',
-          url : 'nuevo-departamento',
-          icono : 'bi bi-circle',
-        },
-        {
-          sub_menu : 'Eliminar Departamento',
-          url : 'eliminar-departamento',
-          icono : 'bi bi-circle',
-        },
-      ]
-    },
-    {
-      id: 3,
-      nombre : 'Departamento 2',
-      url : 'departamento',
-      icono : 'bi bi-bar-chart',
-      menu_hijo : [
-        {
-          sub_menu : 'Nuevo Departamento 2',
-          url : 'nuevo-departamento',
-          icono : 'bi bi-circle',
-        },
-        {
-          sub_menu : 'Eliminar Departamento 2',
-          url : 'eliminar-departamento',
-          icono : 'bi bi-circle',
-        },
-      ]
-    }
-  ];
-
-
-
   ngOnInit(): void {
+    //console.log('pages ts', this._auSer.tokenDecodificado);
+
+    this.payloadServiceSubscription = this._auSer.$getObjSourcePayload.subscribe( (resp) => {
+      this.user = resp.user;
+      this.menu = resp.menu;
+    });
+    this.user = this._auSer.tokenDecodificado.user;
+    this.menu = this._auSer.tokenDecodificado.menu; 
+  }
+
+  ngOnDestroy(): void {
+    this.payloadServiceSubscription?.unsubscribe();
   }
 
   openCloseMenu(){    
@@ -102,7 +49,6 @@ export class PagesComponent implements OnInit {
       this.addClass(ele, 'm');
     }
   }
-
 
   addClass(ele: HTMLElement, name: string){
     this.renderer.addClass(ele,name);
