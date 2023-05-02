@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, inject } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 
@@ -11,8 +10,8 @@ export class GeneralService {
   private horizontalPosition: MatSnackBarHorizontalPosition = 'end'; //'start' | 'center' | 'end' | 'left' | 'right'
   private verticalPosition: MatSnackBarVerticalPosition = 'top'; //'bottom'
 
-  constructor(private snackbar: MatSnackBar) { }
-
+  snackbar = inject(MatSnackBar);
+ 
   alert( message:string, icono:string, panelClass : string){
     return this.snackbar.open( message, icono, {
         duration:( 2 * 1000 ),

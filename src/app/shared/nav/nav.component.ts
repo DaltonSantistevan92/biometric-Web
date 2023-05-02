@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { User } from 'src/app/auth/interfaces/auth-interface';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { PerfilComponent } from '../perfil/perfil.component';
+import { User } from '@auth/interfaces/auth-interface';
+import { AuthService } from '@auth/services/auth.service';
+import { PerfilComponent } from '@shared/perfil/perfil.component';
 
 @Component({
   selector: 'app-nav',
@@ -14,8 +14,6 @@ export class NavComponent implements OnInit {
 
   @Input('user') user!:User;
 
-  //usuario! : User;
-
   constructor(
     private _authSer : AuthService,
     private router : Router,
@@ -23,20 +21,8 @@ export class NavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.returnUsuario();
-    
+  
   }
-
-
- /*  returnUsuario() : User | null{
-    if (this.user === undefined) { 
-      return null
-    }else {
-      console.log(this.user);
-      return this.usuario = this.user;
-    }
-  } */
-
 
   salir(){
     this._authSer.deleteLocalStorage('token');

@@ -1,30 +1,25 @@
 
-
-<!-- ======= Header ======= -->
-
 <div #me class="m">
     <header id="header" class="header fixed-top d-flex align-items-center">
-    
       <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
           <img src="assets/img/logo.png" alt="">
-          <span class="d-none d-lg-block">NiceAdmin</span>
+          <span class="d-none d-lg-block">Biometric Web</span>
         </a>
         <i (click)="openCloseMenu()" class="bi bi-list toggle-sidebar-btn"></i>
       </div>
     
       <app-nav [user]="user"  class="header-nav ms-auto"></app-nav>
-     
     </header>
     
-    <!-- ======= Sidebar - Menu ======= -->
-    
     <app-sidebar [menu]="menu"></app-sidebar>
-    
-    
+  
     <main id="main" class="main">
         <router-outlet></router-outlet>
     </main>
+ 
+    
+    <app-footer></app-footer>
 </div>
 
 

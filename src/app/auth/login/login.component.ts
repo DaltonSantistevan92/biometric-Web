@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
+import { IntDataUser } from '@auth/interfaces/auth-interface';
+import { GeneralService } from '@app/services/general.service';
 
-
-import { AuthService } from '../services/auth.service';
-import { IntDataUser } from '../interfaces/auth-interface';
-import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +14,6 @@ import { GeneralService } from 'src/app/services/general.service';
 export class LoginComponent implements OnInit {
 
   formLogin!: FormGroup;
-  emailValidate: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   hide : boolean = true;
   sppiner : boolean = false;
   error: string = '';
@@ -24,16 +22,17 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router : Router,
     private _auSer: AuthService,
-    private _gs : GeneralService
+    private _gs : GeneralService,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
   }
 
+
   initForm(){
     this.formLogin = this.fb.group({
-			email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailValidate)]],
+			email: ['', [Validators.required]],
 			password: ['', [Validators.required, Validators.minLength(6)]]
 		});
   }
@@ -42,7 +41,7 @@ export class LoginComponent implements OnInit {
     return this.formLogin.get(campo)?.invalid && this.formLogin.get(campo)?.touched;
   }
 
-  errorHandling(campo: string): string {
+  /* errorHandling(campo: string): string {
     const errors = this.formLogin.controls[campo]?.errors;
     if (errors?.['required']) {
       return  this.error = `El ${campo} es requerido`;
@@ -52,7 +51,7 @@ export class LoginComponent implements OnInit {
       return this.error = `El ${campo} deber tener mínimo 6 caracteres`;
     }
     return this.error;
-  }
+  } */
 
   login(){
     this.formLogin.markAllAsTouched();

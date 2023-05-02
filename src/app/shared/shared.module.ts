@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedRoutingModule } from './shared-routing.module';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { NavComponent } from './nav/nav.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import { MaterialsModule } from '../materials/materials.module';
-import { PerfilComponent } from './perfil/perfil.component';
+import { SidebarComponent } from '@shared/sidebar/sidebar.component';
+import { NavComponent } from '@shared/nav/nav.component';
+import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { PerfilComponent } from '@shared/perfil/perfil.component';
+import { FooterComponent } from '@shared/footer/footer.component';
+
+import { MaterialsModule } from '@materials/materials.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -14,17 +16,21 @@ import { PerfilComponent } from './perfil/perfil.component';
     SidebarComponent,
     NavComponent,
     BreadcrumbComponent,
-    PerfilComponent
+    PerfilComponent,
+    FooterComponent
   ],
   exports : [
     SidebarComponent,
     NavComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule,
+    RouterModule,
     MaterialsModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class SharedModule { }

@@ -9,18 +9,18 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="card mb-3">
-
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Biometric Web </h5>
+                    <h5 class="card-title text-center pb-0 fs-4"> Biometric Web </h5>
                   </div>
 
                   <form class="row g-3 needs-validation" [formGroup]="formLogin">
                     <mat-form-field appearance="outline">
                       <mat-label>Correo</mat-label>
-                      <input matInput formControlName="email" type="email" [ngClass]="{ 'is-invalid': fieldsValidate('email') }">
-                      <mat-error> {{ errorHandling('email') }} </mat-error>
+                      <input matInput formControlName="email" type="email" [ngClass]="{ 'is-invalid': fieldsValidate('email') }" appEmailValidation>
+                      <mat-error *ngIf="formLogin.get('email')?.errors?.['required']"> El correo es requerido. </mat-error>
+                      <mat-error *ngIf="formLogin.get('email')?.invalid"> El correo no tiene formato correcto. </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
@@ -29,19 +29,19 @@
                       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                       </button>
-                      <mat-error>{{ errorHandling('password') }}</mat-error>                      
+                      <mat-error *ngIf="formLogin.get('password')?.errors?.['required']"> La contraseña es requerida. </mat-error> 
+                      <mat-error *ngIf="formLogin.controls['password']?.errors?.['minlength']"> La contraseña debe tener mínimo 6 caracteres. </mat-error>                   
                     </mat-form-field>
                   </form>
                   
                   <div class="col-12 mt-3">
-                    <button class="btn btn-primary w-100" [disabled]="formLogin.invalid" type="button" (click)="login()">
-                      <span class="text-white"> Iniciar Sesion </span>
+                    <button class="btn btn-outline-primary w-100" [disabled]="formLogin.invalid" type="button" (click)="login()">
+                      <span> Iniciar Sesion </span>
                     </button>
 
                     <div *ngIf="sppiner" class="d-flex flex-column align-items-center justify-content-center mt-2">
                       <mat-spinner diameter="20"></mat-spinner>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -53,74 +53,5 @@
 
     </div>
 
-
-   <!--  <main class="bg-login">
-      <div class="container">
-        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-          <div class="container card pb-5 br-4">
-    
-            <div class="row justify-content-center">
-              <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-                <div class="d-flex justify-content-center py-4">
-                  <img src="assets2/img/AF_XTRIM-LOGO.png" width="200" height="80" />
-                </div>
-              </div>
-            </div>
-    
-            <div class="row">
-              <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-    
-                <div class="card mb-2"> 
-                  <div class="card-body">
-    
-                    <div class="pt-2 pb-1">
-                      <p class="card-title text-center small pb-0">Plataforma De Gestión</p>
-                    </div>
-    
-                    <form class="row g-1" [formGroup]="formLogin">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Correo Electrónico</mat-label>
-                        <input matInput formControlName="email" type="email"
-                          >
-                       
-                      </mat-form-field>
-    
-    
-                      <mat-form-field appearance="outline">
-                        <mat-label>Contraseña</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
-                        >
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
-                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                        
-                      </mat-form-field>
-                    </form>
-    
-                    <div class="col-12 mt-3">
-                      <button class="btn btn-p w-100" [disabled]="formLogin.disabled" type="button" (click)="login()">
-                        <span *ngIf="!formLogin.disabled" class="text-white"> Iniciar Sesion </span>
-                        <div *ngIf="formLogin.disabled" class="spinner-border text-light" role="status">
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                      </button>
-                    </div>
-    
-                  </div>
-    
-                </div>
-              </div>
-    
-              <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-                <div class="oblique position-absolute mt-1 w-60 d-md-block d-none">
-                  <img src="assets/img/new-1.jpg" class="img-fluid" alt="">
-                </div>
-              </div>
-    
-            </div>
-          </div>
-        </section>
-      </div>
-    </main> -->
  
 

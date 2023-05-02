@@ -1,25 +1,26 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '@app/app-routing.module';
 //componentes
-import { AppComponent } from './app.component';
-import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
+import { AppComponent } from '@app/app.component';
+import { NoPageFoundComponent } from '@app/components/no-page-found/no-page-found.component';
 
 //modulos
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from '@auth/auth.module';
+import { PagesModule } from '@pages/pages.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { PagesModule } from './pages/pages.module';
 
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { AuthInterceptorService } from './interceptor/auth-interceptor.service';
+import { AuthInterceptorService } from '@app/interceptor/auth-interceptor.service';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NoPageFoundComponent
+    NoPageFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +35,7 @@ import { AuthInterceptorService } from './interceptor/auth-interceptor.service';
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService //permitir decodificar y decodificar token 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

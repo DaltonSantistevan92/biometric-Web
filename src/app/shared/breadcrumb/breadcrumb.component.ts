@@ -1,4 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IntUrlActivate } from '@app/pages/gestion-usuario/interfaces/urlActivatedRoute.interface';
+
+interface Url {
+  path :string;
+}
 
 @Component({
   selector: 'app-breadcrumb',
@@ -7,18 +12,18 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BreadcrumbComponent implements OnInit {
 
-  @Input() listaUrl : any [] = [];
+  @Input() listaUrl : IntUrlActivate [] = [];
   titulo : string = '';
-  newListaUrl : any [] = [];
+  newListaUrl : Url [] = [];
 
   constructor() { }
 
   ngOnInit(): void {
-
     this.titulo = this.listaUrl[0].path.replace('-',' ') || '';
 
-    this.listaUrl.forEach( (item) => { this.newListaUrl.push( item.path.replace('-', ' ')) })
-    
+    this.listaUrl.forEach( (item) => { 
+      this.newListaUrl.push( { path : item.path.replace('-', ' ') } );
+    });
   }
 
 }

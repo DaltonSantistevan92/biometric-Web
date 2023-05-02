@@ -7,7 +7,7 @@
         </a>
         <ul id="{{'components-nav-'+m.id}}" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li *ngFor="let mh of m.menus_hijos">
-            <a [routerLink]="[m.url, mh.url]" routerLinkActive="active-link">
+            <a [routerLink]="[m.url, mh.url]" routerLinkActive="active-link" >
               <i class="bi bi-circle"></i><span>{{ mh.nombre | titlecase }}</span>
             </a>
           </li>

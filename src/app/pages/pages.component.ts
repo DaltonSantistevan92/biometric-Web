@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '@auth/services/auth.service';
 import { Subscription } from 'rxjs';
-import { Menu, User } from '../auth/interfaces/auth-interface';
+import { Menu, User } from '@auth/interfaces/auth-interface';
 
 @Component({
   selector: 'app-pages',
@@ -19,7 +19,6 @@ export class PagesComponent implements OnInit, OnDestroy  {
   constructor(
     private renderer : Renderer2,
     private _auSer : AuthService
-
   ) { }
 
   ngOnInit(): void {

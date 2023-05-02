@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthGuard } from '../auth/guards/auth.guard';
-import { PruebaComponent } from './prueba/prueba.component';
-import { GestionUsuarioComponent } from './gestion-usuario/gestion-usuario.component';
+
+import { PagesComponent } from '@pages/pages.component';
+import { DashboardComponent } from '@pages/dashboard/dashboard.component';
+import { GestionUsuarioComponent } from '@pages/gestion-usuario/gestion-usuario.component';
+
+import { AuthGuard } from '@auth/guards/auth.guard';
 
 const routes: Routes = [
-  { path : '' , redirectTo : 'dashboard', pathMatch : 'full'},
+  { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
   { 
     path : '', 
     component : PagesComponent,//home pagina principal
@@ -18,11 +19,6 @@ const routes: Routes = [
         component : DashboardComponent, 
         canActivate : [AuthGuard]  
       },
-     /*  { 
-        path : 'departamento/nuevo-departamento', 
-        component : PruebaComponent, //prueba
-        canActivate : [AuthGuard]  
-      }, */
       { 
         path : 'gestión-usuario/nuevo-usuario', 
         component : GestionUsuarioComponent, 

@@ -6,7 +6,7 @@
         <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
         <ng-container *ngIf="user">
           <span class="d-none d-md-block dropdown-toggle ps-2">
-            <b> {{ user.persona.nombres }} {{ user.persona.apellidos }} </b>
+            <b> {{ user.persona.nombres | titlecase }} {{ user.persona.apellidos | titlecase }} </b>
           </span>
         </ng-container>
       </a>
@@ -14,8 +14,8 @@
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
         <ng-container *ngIf="user">
           <li class="dropdown-header">
-            <h6> {{ user.persona.nombres }} {{ user.persona.apellidos }} </h6>
-            <span> {{ user.rol.cargo }} </span>
+            <h6> {{ user.persona.nombres | titlecase }} {{ user.persona.apellidos | titlecase }} </h6>
+            <span> {{ user.rol.cargo | titlecase }} </span>
           </li>
         </ng-container>
         

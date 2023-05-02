@@ -1,24 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
-
+import { environment } from '@env/environment.prod';
 import { JwtHelperService} from '@auth0/angular-jwt';
 import decode from 'jwt-decode'
-import { IntAuth, IntDataUser, IntPayload } from '../interfaces/auth-interface';
+import { IntAuth, IntDataUser, IntPayload } from '@auth/interfaces/auth-interface';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  //private _listaMenus : any [] = [];  //lista de menus
-
-  /* get menu(): any { //getter de menu
-    return [...this._listaMenus];
-  } */
 
   public decodificar! : IntPayload;
 
@@ -33,13 +25,9 @@ export class AuthService {
   private objSourcePayload = new BehaviorSubject<IntPayload>({} as IntPayload);
   public readonly $getObjSourcePayload : Observable<IntPayload> = this.objSourcePayload.asObservable();
 
-  constructor(
-    private route: Router,    
-    private http: HttpClient,
-    private jwtHelper:JwtHelperService,
 
-  ) { }
-
+  http = inject(HttpClient);
+  jwtHelper = inject(JwtHelperService);
   api = environment.apiUrl;
 
   verificacionAutenticacion():Observable<boolean>{
@@ -47,18 +35,15 @@ export class AuthService {
     return of(true);
   }
 
-
   login(data:IntDataUser): Observable<IntAuth>{
     const url = `${this.api}/loginWeb`;
-    return this.http.post<IntAuth>(url,data)
-    .pipe(tap( (resp) => {
+    return this.http.post<IntAuth>(url,data).pipe(tap( (resp) => {
       if (resp.status) {
         this.setLocalStorage('token',resp.token);
         this.decodificar = decode(resp.token);
         this.sendObjePayload(this.decodificar); 
       }
-    })
-    );
+    }));
   }
 
   sendObjePayload(data:IntPayload){

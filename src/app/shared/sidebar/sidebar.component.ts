@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Menu } from 'src/app/auth/interfaces/auth-interface';
+
+import { Menu } from '@auth/interfaces/auth-interface';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styles : [ ` `],
+ 
 })
 export class SidebarComponent implements OnInit {
 
