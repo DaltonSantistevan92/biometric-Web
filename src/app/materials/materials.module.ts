@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -26,7 +27,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatChipsModule
   ],
   exports : [
     MatFormFieldModule,
@@ -38,7 +40,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatChipsModule
   ]
 })
 export class MaterialsModule { }

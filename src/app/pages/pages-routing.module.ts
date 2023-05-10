@@ -6,6 +6,8 @@ import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { GestionUsuarioComponent } from '@pages/gestion-usuario/gestion-usuario.component';
 
 import { AuthGuard } from '@auth/guards/auth.guard';
+import { GestionEventoComponent } from './gestion-evento/gestion-evento.component';
+import { GestionDepartamentoComponent } from './gestion-departamento/gestion-departamento.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -22,6 +24,16 @@ const routes: Routes = [
       { 
         path : 'gestión-usuario/nuevo-usuario', 
         component : GestionUsuarioComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'registro/evento', 
+        component : GestionEventoComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'registro/departamento', 
+        component : GestionDepartamentoComponent, 
         canActivate : [AuthGuard]  
       }
     ]

@@ -17,18 +17,19 @@ import { AuthInterceptorService } from '@app/interceptor/auth-interceptor.servic
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    NoPageFoundComponent,
+    NoPageFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     AuthModule,
     PagesModule,
-    BrowserAnimationsModule
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true },//inyectamos el interceptor 

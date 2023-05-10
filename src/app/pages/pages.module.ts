@@ -21,6 +21,10 @@ import { AlphaNumericDirective } from '@directives/alpha-numeric.directive';
 import { EmailValidationDirective } from '@directives/email-validation.directive';
 import { LettersDirective } from '@directives/letters.directive';
 import { NumerosEcuadorPhoneDirective } from '@directives/numeros-ecuador-phone.directive';
+import { GestionEventoComponent } from './gestion-evento/gestion-evento.component';
+import { CrearDepartamentoComponent } from './gestion-departamento/crear-departamento/crear-departamento.component';
+import { CrearEventoComponent } from './gestion-evento/crear-evento/crear-evento.component';
+import { GestionDepartamentoComponent } from './gestion-departamento/gestion-departamento.component';
 
 
 @NgModule({
@@ -29,16 +33,21 @@ import { NumerosEcuadorPhoneDirective } from '@directives/numeros-ecuador-phone.
     DashboardComponent,
     GestionUsuarioComponent,
     CrearEditarUsuarioComponent,
+    GestionEventoComponent,
+    GestionDepartamentoComponent,
+    CrearDepartamentoComponent,
+    CrearEventoComponent,
     NumericOnlyDirectiveDirective,
     CedulaDirective,
     AlphaNumericDirective,
     EmailValidationDirective,
     LettersDirective,
-    NumerosEcuadorPhoneDirective
+    NumerosEcuadorPhoneDirective,
+    
   ],
   exports : [
     CommonModule,
-    EmailValidationDirective
+    EmailValidationDirective,MaterialsModule
   ],
   imports: [
     CommonModule,

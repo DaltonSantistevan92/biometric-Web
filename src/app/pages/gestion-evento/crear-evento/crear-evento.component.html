@@ -1,0 +1,30 @@
+<div class="container">
+    <h2 mat-dialog-title>{{ listadoSeleccionado ? "Actualizar el Evento" : "Ingresar Nueva Información Del evento" }}</h2>   
+    <form class="example-form row mt-3">
+      <mat-form-field  appearance="fill">
+         <mat-label>Nombre del Evento</mat-label>
+         <textarea matInput
+                   cdkTextareaAutosize
+                   #autosize="cdkTextareaAutosize"
+                   cdkAutosizeMinRows="1"
+                   cdkAutosizeMaxRows="5"></textarea>
+       </mat-form-field>
+       <mat-form-field class="example-full-width" appearance="fill">
+         <mat-label>Fecha del Evento</mat-label>
+         <input matInput>
+         <mat-hint>MM/DD/YYYY</mat-hint>
+         <mat-datepicker-toggle matIconSuffix [for]="picker">
+           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+         </mat-datepicker-toggle>
+         <mat-datepicker #picker></mat-datepicker>
+       </mat-form-field>
+    </form>
+    
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Cédula</mat-label>
+        <input matInput maxlength="10" type="text" appCedula appNumericOnlyDirective>
+         
+      </mat-form-field>
+    </div>
+</div>
