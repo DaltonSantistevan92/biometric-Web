@@ -47,7 +47,8 @@ import { GestionDepartamentoComponent } from './gestion-departamento/gestion-dep
   ],
   exports : [
     CommonModule,
-    EmailValidationDirective,MaterialsModule
+    EmailValidationDirective,
+    MaterialsModule
   ],
   imports: [
     CommonModule,

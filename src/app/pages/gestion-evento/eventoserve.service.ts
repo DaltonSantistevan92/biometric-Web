@@ -15,12 +15,12 @@ export class EventoserveService {
     return this.http.get<IEvento>(url);
   }
 
-  saveEvento(data:Evento) : Observable<IEvento>{
+  saveEvento(data: { evento: Evento }) : Observable<IEvento>{
     const url = `${this.api}/event/save`;
     return this.http.post<IEvento>(url,data);
   }
 
-  updateEvento(data:Evento) : Observable<IEvento>{
+  updateEvento(data: { evento: Evento }) : Observable<IEvento>{
     const url = `${this.api}/event/update`;
     return this.http.post<IEvento>(url,data);
   }

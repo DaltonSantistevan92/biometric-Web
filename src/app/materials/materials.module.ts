@@ -12,6 +12,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { TextFieldModule } from '@angular/cdk/text-field';
+
 
 
 
@@ -28,7 +31,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCardModule,
+    TextFieldModule,
   ],
   exports : [
     MatFormFieldModule,
@@ -41,7 +46,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCardModule,
+    TextFieldModule,
   ]
 })
 export class MaterialsModule { }
