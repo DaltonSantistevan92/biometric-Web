@@ -18,11 +18,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.listaUrl = this.activedRoute.snapshot.url;
-
     this.chartBar();
     this.chartBarHorizontal();
     this.chartDoughnut();
-
   }
 
 
@@ -60,7 +58,6 @@ export class DashboardComponent implements OnInit {
     const ctx = document.getElementById('myChart2') as HTMLCanvasElement;
 
     if (ctx !== null) {
-      // El elemento existe, así que podemos pasarlo como argumento
       const labels = Array.from({ length: 7 }, (_, index) => {
         const date = new Date();
         date.setMonth(date.getMonth() - index);
