@@ -51,6 +51,16 @@
                 <th mat-header-cell *matHeaderCellDef> Cargo </th>
                 <td mat-cell *matCellDef="let element"> {{element.rol.cargo | titlecase}} </td>
             </ng-container>
+            
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element" >
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip *ngIf="element.estado === 'A'" color="primary" selected>Activo</mat-chip> 
+                        <mat-chip  *ngIf="element.estado === 'I'" color="accent" selected>Inactivo</mat-chip>
+                    </mat-chip-list>
+                </td>
+            </ng-container>
     
             <ng-container matColumnDef="accion">
                 <th mat-header-cell *matHeaderCellDef> Accion </th>

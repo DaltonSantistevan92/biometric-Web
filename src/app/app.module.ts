@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AuthInterceptorService } from '@app/interceptor/auth-interceptor.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -29,7 +30,7 @@ import { AuthInterceptorService } from '@app/interceptor/auth-interceptor.servic
     HttpClientModule,
     BrowserAnimationsModule,
     AuthModule,
-    PagesModule,
+    PagesModule,ReactiveFormsModule
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true },//inyectamos el interceptor 

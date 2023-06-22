@@ -9,6 +9,8 @@ import { FooterComponent } from '@shared/footer/footer.component';
 
 import { MaterialsModule } from '@materials/materials.module';
 import { RouterModule } from '@angular/router';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { EmpresaComponent } from './empresa/empresa.component';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { RouterModule } from '@angular/router';
     NavComponent,
     BreadcrumbComponent,
     PerfilComponent,
-    FooterComponent
+    FooterComponent,
+    EmpresaComponent
   ],
   exports : [
     SidebarComponent,
@@ -28,7 +31,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
-    MaterialsModule
+    MaterialsModule,
+    NgxDropzoneModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

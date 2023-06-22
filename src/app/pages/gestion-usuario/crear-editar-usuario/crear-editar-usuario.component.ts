@@ -28,6 +28,8 @@ export class CrearEditarUsuarioComponent implements OnInit {
   listaRoles: Rol[] = [];
   hide : boolean = true;
 
+  
+
   constructor(
     private _gs: GeneralService,
     private fb: FormBuilder,
@@ -203,7 +205,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
       error: (err) => { console.log(err) }
     });
   }
-
+ 
   convertirFileReader(blob: any) {
     const reader = new FileReader();
 

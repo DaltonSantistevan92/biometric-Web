@@ -12,12 +12,12 @@ import { GeneralService } from '@app/services/general.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+ 
   formLogin!: FormGroup;
   hide : boolean = true;
   sppiner : boolean = false;
   error: string = '';
-
+ 
   constructor(
     private fb: FormBuilder,
     private router : Router,

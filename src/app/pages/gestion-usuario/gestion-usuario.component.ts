@@ -24,7 +24,7 @@ import { IntUrlActivate } from '@pages/gestion-usuario/interfaces/urlActivatedRo
 })
 export class GestionUsuarioComponent implements OnInit {
   displayedColumnsUsuario: string[] = ['id','cedula','nombres','apellidos','email','cargo'];
-  columnsToDisplayWithExpandUsuario = [...this.displayedColumnsUsuario, 'accion'];
+  columnsToDisplayWithExpandUsuario = [...this.displayedColumnsUsuario,'estado','accion'];
   dataSourceUsuario!: MatTableDataSource<Usuario>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

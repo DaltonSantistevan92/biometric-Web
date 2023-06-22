@@ -12,7 +12,7 @@ import { NG_VALIDATORS, Validator, FormControl } from '@angular/forms';
   ]
 })
 export class CedulaDirective implements Validator{
-
+ 
   constructor() { }
 
   validate(control: FormControl): {[key: string]: any} | null {

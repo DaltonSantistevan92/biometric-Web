@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CrearDepartamentoComponent } from './crear-departamento/crear-departamento.component'; 
 import { delay } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DeleteModalComponent } from '@app/dialod-delete/delete-modal/delete-modal.component';
 
 
 
@@ -37,7 +38,7 @@ export class GestionDepartamentoComponent implements OnInit {
 
   displayedColumnsDepartamento: string[] = ['id','nombre','estado'];
   columnsToDisplayWithExpandDepartamento = [...this.displayedColumnsDepartamento, 'accion', 'expand'];
-  expandedElementDepartamento!: any | null;
+  expandedElementDepartamento!: Departamento | null;
 
 
   /*******VIEW CHILD*********/
@@ -62,12 +63,9 @@ export class GestionDepartamentoComponent implements OnInit {
   getDepartamentos(){
     this._departamentoService.getAllDepartaments().subscribe({
       next: (res) => {
-
         if(res.data.length > 0){
-          console.log("DEPARTAMENTOS: ", res.data);
           this.datosDepartamento(res.data);
         }
-
       },
       error: (err) => {
         this._gs.alert( 'Problemas al listar los departamentos', '📛', 'red' );
@@ -80,23 +78,21 @@ export class GestionDepartamentoComponent implements OnInit {
     this.listaDepartamento = [];
     this.listaDepartamento = departamento;
     this.dataSourceDepartamento = new MatTableDataSource(this.listaDepartamento);
-    this.dataSourceDepartamento.paginator=this.paginator;
-    this.dataSourceDepartamento.sort=this.sort;
+    this.dataSourceDepartamento.paginator = this.paginator;
+    this.dataSourceDepartamento.sort = this.sort;
   }
-
+ 
   crearDepartamento(){
-    const dialogRef = this.dialog.open(CrearDepartamentoComponent, { disableClose: true, width: '500px', height: '400px' });
+    const dialogRef = this.dialog.open(CrearDepartamentoComponent, { disableClose: true, width: '700px', height: '650px' });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
         this.getDepartamentos();
       }
     });
-
-
   }
 
   editarDepartamento(departamento: Departamento){
-    const dialogRef = this.dialog.open(CrearDepartamentoComponent, { disableClose: true, data:departamento, width: '500px', height: '400px'} );
+    const dialogRef = this.dialog.open(CrearDepartamentoComponent, { disableClose: true, data:departamento, width: '700px', height: '650px'} );
     
     dialogRef.afterClosed().pipe(delay(2000)).subscribe( (result : Departamento) => {
       if (result != undefined) { 
@@ -107,7 +103,31 @@ export class GestionDepartamentoComponent implements OnInit {
   }
 
   eliminarDepartamento(departamento: Departamento){
+    const dialogRef = this.dialog.open(DeleteModalComponent, { disableClose: true, data: {departamento, title: 'departamento'}, width: '600px'} );
 
+    dialogRef.afterClosed().subscribe( (result) => {
+      if (result != undefined) { 
+        this.serviceDelete( parseInt(result) );
+      }
+    });
+    
+  }
+
+  serviceDelete(id:number){
+    
+    this._departamentoService.deleteDepartament(id).subscribe({
+      next: (resp) => { 
+        if (resp.status) {
+          this._gs.alert( resp.message, '🚀', 'green' );
+          this.getDepartamentos();
+        } else {
+          this._gs.alert( resp.message, '📛', 'red' ); 
+        }
+      },
+      error: (err) => {
+        this._gs.alert( 'Problemas con eliminar un departamento', '📛', 'red' );
+      }
+    })
   }
 
   applyFilterDepartamento(event: any){

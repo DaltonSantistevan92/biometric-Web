@@ -14,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -33,7 +34,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatPaginatorModule,
     MatChipsModule,
     MatCardModule,
-    TextFieldModule,
+    TextFieldModule,ReactiveFormsModule
   ],
   exports : [
     MatFormFieldModule,
@@ -48,7 +49,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatPaginatorModule,
     MatChipsModule,
     MatCardModule,
-    TextFieldModule,
+    TextFieldModule,ReactiveFormsModule
   ]
 })
 export class MaterialsModule { }

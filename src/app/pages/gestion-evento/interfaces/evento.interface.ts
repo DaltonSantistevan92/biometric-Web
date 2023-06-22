@@ -10,3 +10,5 @@ export interface Evento {
   fecha: Date;
   estado?: string;
 }
+
+

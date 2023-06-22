@@ -65,7 +65,7 @@ export class CrearEventoComponent implements OnInit {
       this.actualizarEvento(obj);
     } else {
       console.log("nuevo")
-       const form: Evento = this.formEvento.value;
+      const form: Evento = this.formEvento.value;
       const data = this.addObjeto(form);
       console.log("nuevo",data)
       this.registrarEvento(data);

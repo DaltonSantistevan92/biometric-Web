@@ -11,7 +11,7 @@ interface Url {
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {
-
+ 
   @Input() listaUrl : IntUrlActivate [] = [];
   titulo : string = '';
   newListaUrl : Url [] = [];

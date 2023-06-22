@@ -40,6 +40,12 @@ export class DeleteModalComponent implements OnInit {
         this.titulo = titulo;
         this.datos = `${datos.evento.nombre}`;
         break;
+
+        case "departamento":
+          this.id = datos.departamento.id;
+          this.titulo = titulo;
+          this.datos = `${datos.departamento.nombre}`;
+          break;
     
       default:
         break;

@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IntUrlActivate } from '../gestion-usuario/interfaces/urlActivatedRoute.interface';
 import Chart from 'chart.js/auto';
+import { GeneralService } from '@app/services/general.service';
+import { DatosList } from './interfaces/dashboard.interfaces';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DashboardService } from './dashboard.service';
+
+import * as Highcharts from 'highcharts';
 
 
 @Component({
@@ -10,47 +16,125 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  formRegresionLineal!: FormGroup;
   listaUrl: IntUrlActivate[] = [];
 
+  listaCount: DatosList[] = [];
+
+  listaTipoAsistencia: any[] = [];
+
+  listaTemporalidad: any[] = [
+    {
+      id_temp: 1,
+      temporalidad: 'Día'
+    },
+    {
+      id_temp: 2,
+      temporalidad: 'Mes',
+    },
+    {
+      id_temp: 3,
+      temporalidad: 'Año',
+    }
+  ]
+
   constructor(
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private _gs: GeneralService,
+    private fb: FormBuilder,
+    private dash_service: DashboardService
   ) { }
 
   ngOnInit(): void {
     this.listaUrl = this.activedRoute.snapshot.url;
+    this.initFormEvento();
     this.chartBar();
     this.chartBarHorizontal();
     this.chartDoughnut();
+    this.getAllCount();
+    this.cargarTipoAsistencia();
+
+    
+  }
+
+  initFormEvento() {
+    this.formRegresionLineal = this.fb.group({
+
+      fechaInicio: ['', [Validators.required]],
+      fechaFin: ['', [Validators.required]],
+      id: ['', [Validators.required]],
+      id_temp: ['', [Validators.required]],
+    });
+  }
+
+
+  cargarTipoAsistencia() {
+
+    this.dash_service.cargarTipoAsistencia().subscribe({
+      next: (response) => {
+        this.listaTipoAsistencia = response.data;
+      },
+      error: (error) => {
+        console.log("Error tipo de asistencia: ", error)
+      }
+    });
+
+  }
+
+  fieldsValidate(campo: string) {
+    return this.formRegresionLineal.get(campo)?.invalid && this.formRegresionLineal.get(campo)?.touched;
+  }
+
+
+  getAllCount() {
+    this._gs.getCountList().subscribe((resp) => {
+      this.listaCount = resp.data;
+    });
   }
 
 
   chartBar() {
-    const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+    this._gs.cargartendenciaAsistenciaGlobales().subscribe({
+      next: (resp) => {
 
-    if (ctx !== null) {
-      // El elemento existe, así que podemos pasarlo como argumento
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
+
+        if (resp.data) {
+          const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+
+          if (ctx !== null) {
+            // El elemento existe, así que podemos pasarlo como argumento
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: resp.data.labels,
+                datasets: [{
+                  label: '# de asistencias',
+                  data: resp.data.asistencia,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+
+          } else {
+            console.error("El elemento no existe en la página");
           }
-        }
-      });
 
-    } else {
-      console.error("El elemento no existe en la página");
-    }
+        }
+      },
+      error: (err) => {
+
+      }
+    })
+
+
 
   }
 
@@ -100,7 +184,7 @@ export class DashboardComponent implements OnInit {
           indexAxis: 'y',
           responsive: true, // Hace que el gráfico sea sensible al tamaño del contenedor
           maintainAspectRatio: false, // Permite que el gráfico cambie su relación de aspecto
-      
+
         }
       });
     } else {
@@ -139,6 +223,111 @@ export class DashboardComponent implements OnInit {
       console.error("El elemento no existe en la página");
     }
 
+  }
+
+  regresionLineal() {
+    const form = this.formRegresionLineal.value;
+    let temporalidad_id = parseInt(form.id_temp);
+    let tipo_asistencia_id = parseInt(form.id);
+    let fechaInicio = form.fechaInicio
+    let fechaFin = form.fechaFin;
+
+    this.dash_service.regresionLinealAsistencia(temporalidad_id,tipo_asistencia_id,fechaInicio,fechaFin).subscribe({
+      next : (resp) => {
+        console.log(resp);
+
+        if(resp.status){
+
+          let puntos = resp.data.puntos;
+          let textTemporalidad = '';
+
+          if(temporalidad_id == 1)        textTemporalidad = 'día';
+          else if(temporalidad_id == 2)   textTemporalidad = 'mes';
+          else if(temporalidad_id == 3)   textTemporalidad = 'año';
+
+          let proyeccion = puntos.proyeccion.y;
+          let proF = proyeccion.toFixed(3);
+
+          Highcharts.chart('container', {
+            title: {
+              text: 'Gráfica de regresión lineal de Asistencias'
+            },
+            xAxis: {
+              min: -0.5,
+              max: 5.5
+            },
+            yAxis: {
+              min: 0
+            },
+            series: [{
+              type: 'line',
+              name: 'Regresión lineal',
+              data: [puntos.inicio.x, puntos.inicio.y],
+              marker: {
+                enabled: false
+              },
+              states: {
+                hover: {
+                  lineWidth: 0
+                }
+              },
+              enableMouseTracking: false
+            }, {
+              type: 'scatter',
+              name: 'Observations',
+              data: [resp.data.datos],
+              marker: {
+                radius: 4
+              }
+            }]
+          }); 
+
+
+
+
+        }
+        
+
+      },
+      error : (err) => {
+        console.log(err);
+
+      }
+    })
+
+   /*  Highcharts.chart('container', {
+      title: {
+        text: 'Gráfica de regresión lineal de Asistencias'
+      },
+      xAxis: {
+        min: -0.5,
+        max: 5.5
+      },
+      yAxis: {
+        min: 0
+      },
+      series: [{
+        type: 'line',
+        name: 'Regression Line',
+        data: [[0, 1.11], [5, 4.51]],
+        marker: {
+          enabled: false
+        },
+        states: {
+          hover: {
+            lineWidth: 0
+          }
+        },
+        enableMouseTracking: false
+      }, {
+        type: 'scatter',
+        name: 'Observations',
+        data: [1, 1.5, 2.8, 3.5, 3.9, 4.2],
+        marker: {
+          radius: 4
+        }
+      }]
+    }); */
   }
 
 }

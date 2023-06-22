@@ -15,6 +15,12 @@ export class ToolService {
     return this.http.get(url , { responseType: 'blob' });
   }
 
+
+  mostrarFile(folder:string,file:string){
+    let url = `${this.api}/mostrarImagen/${folder}/${file}`;
+    return this.http.get(url);
+  }
+
   subirArchivo(files: Array<File>, name:string, url:string){
     let urlCompleta = `${this.api}/${url}`;
     let formdata = new FormData();
