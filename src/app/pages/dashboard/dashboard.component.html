@@ -26,10 +26,10 @@
 
 
 
-           
-            <div  class="row">
+
+            <div class="row">
                 <div class="col-12">
-                    <div class="card">                
+                    <div class="card">
 
                         <div class="card-body">
                             <h1 class="card-title">Regresión lineal </h1>
@@ -37,47 +37,62 @@
                             <div class="container">
                                 <form [formGroup]="formRegresionLineal">
                                     <div class="row">
-                                      <div class="col col-lg-2">
-                                        <mat-form-field class="widthMatFormField" appearance="outline">
-                                            <mat-label>Fecha inicio</mat-label>
-                                            <input matInput formControlName="fechaInicio" type="date" [ngClass]="{ 'is-invalid': fieldsValidate('fechaInicio') }">
-                                            <mat-error *ngIf="formRegresionLineal.get('fechaInicio')?.errors?.['required']"> La fecha de inicio es requerida. </mat-error>
-                                        </mat-form-field>
-                                      </div>
-
-                                      <div class="col col-lg-2">
-                                        <mat-form-field class="widthMatFormField"  appearance="outline">
-                                            <mat-label>Fecha fin</mat-label>
-                                            <input matInput formControlName="fechaFin" type="date" [ngClass]="{ 'is-invalid': fieldsValidate('fechaFin') }">
-                                            <mat-error *ngIf="formRegresionLineal.get('fechaFin')?.errors?.['required']"> La fecha final es requerida. </mat-error>
-                                        </mat-form-field>
-                                      </div>
-                              
-                                      <div class="col col-lg-3">
-                                        <mat-form-field class="widthMatFormField" appearance="outline">
-                                            <mat-label>Tipo asistencia</mat-label>
-                                            <mat-select formControlName="id" [ngClass]="{ 'is-invalid': fieldsValidate('id') }">
-                                                <mat-option>-- Seleccione un tipo de asistencia--</mat-option>
-                                                <mat-option *ngFor="let ta of listaTipoAsistencia" [value]="ta.id"> {{ ta.type | titlecase }}</mat-option>
-                                            </mat-select>
-                                            <mat-error *ngIf="formRegresionLineal.get('id')?.errors?.['required']"> El tipo de asistencia es requerido. </mat-error>
-                                        </mat-form-field>
-                                      </div>
-
-                                        <div class="col col-lg-3">
-                                            <mat-form-field  class="widthMatFormField" appearance="outline">
-                                                <mat-label>Temporalidad</mat-label>
-                                                <mat-select formControlName="id_temp" [ngClass]="{ 'is-invalid': fieldsValidate('id_temp') }">
-                                                    <mat-option>-- Seleccione un tipo de temporalidad--</mat-option>
-                                                    <mat-option *ngFor="let temp of listaTemporalidad" [value]="temp.id_temp"> {{ temp.temporalidad | titlecase }}</mat-option>
-                                                </mat-select>
-                                                <mat-error *ngIf="formRegresionLineal.get('id_temp')?.errors?.['required']"> El tipo de temporalidad es requerido. </mat-error>
+                                        <div class="col col-lg-2">
+                                            <mat-form-field class="widthMatFormField" appearance="outline">
+                                                <mat-label>Fecha inicio</mat-label>
+                                                <input matInput formControlName="fechaInicio" type="date"
+                                                    [ngClass]="{ 'is-invalid': fieldsValidate('fechaInicio') }">
+                                                <mat-error
+                                                    *ngIf="formRegresionLineal.get('fechaInicio')?.errors?.['required']">
+                                                    La fecha de inicio es requerida. </mat-error>
                                             </mat-form-field>
                                         </div>
 
-                                 
                                         <div class="col col-lg-2">
-                                            <button (click)="regresionLineal()" [disabled]="formRegresionLineal.invalid" class="btn btn btn-outline-primary d-grid mt-2" >
+                                            <mat-form-field class="widthMatFormField" appearance="outline">
+                                                <mat-label>Fecha fin</mat-label>
+                                                <input matInput formControlName="fechaFin" type="date"
+                                                    [ngClass]="{ 'is-invalid': fieldsValidate('fechaFin') }">
+                                                <mat-error
+                                                    *ngIf="formRegresionLineal.get('fechaFin')?.errors?.['required']">
+                                                    La fecha final es requerida. </mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col col-lg-3">
+                                            <mat-form-field class="widthMatFormField" appearance="outline">
+                                                <mat-label>Tipo asistencia</mat-label>
+                                                <mat-select formControlName="id"
+                                                    [ngClass]="{ 'is-invalid': fieldsValidate('id') }">
+                                                    <mat-option>-- Seleccione un tipo de asistencia--</mat-option>
+                                                    <mat-option *ngFor="let ta of listaTipoAsistencia" [value]="ta.id">
+                                                        {{ ta.type | titlecase }}</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="formRegresionLineal.get('id')?.errors?.['required']">
+                                                    El tipo de asistencia es requerido. </mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col col-lg-3">
+                                            <mat-form-field class="widthMatFormField" appearance="outline">
+                                                <mat-label>Temporalidad</mat-label>
+                                                <mat-select formControlName="id_temp"
+                                                    [ngClass]="{ 'is-invalid': fieldsValidate('id_temp') }">
+                                                    <mat-option>-- Seleccione un tipo de temporalidad--</mat-option>
+                                                    <mat-option *ngFor="let temp of listaTemporalidad"
+                                                        [value]="temp.id_temp"> {{ temp.temporalidad | titlecase
+                                                        }}</mat-option>
+                                                </mat-select>
+                                                <mat-error
+                                                    *ngIf="formRegresionLineal.get('id_temp')?.errors?.['required']"> El
+                                                    tipo de temporalidad es requerido. </mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+
+                                        <div class="col col-lg-2">
+                                            <button (click)="regresionLineal()" [disabled]="formRegresionLineal.invalid"
+                                                class="btn btn btn-outline-primary d-grid mt-2">
                                                 <i class="fa fa-plus"></i>Consultar
                                             </button>
                                         </div>
@@ -95,8 +110,8 @@
                         </div>
 
 
-                        
-              
+
+
 
                     </div>
 
@@ -107,7 +122,7 @@
 
 
             <div class="row">
-             
+
                 <div class="col-12">
                     <div class="card">
                         <div class="filter">
@@ -161,7 +176,7 @@
                 <div class="col-xxl-6 col-md-6">
                     <div class="card">
                         <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="drodown" ><i class="bi bi-three-dots"></i></a>
+                            <a class="icon" href="#" data-bs-toggle="drodown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                 <li class="dropdownh-eader text-start">
                                     <h6>Filter</h6>
