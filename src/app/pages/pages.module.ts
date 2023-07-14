@@ -25,6 +25,10 @@ import { GestionEventoComponent } from './gestion-evento/gestion-evento.componen
 import { CrearDepartamentoComponent } from './gestion-departamento/crear-departamento/crear-departamento.component';
 import { CrearEventoComponent } from './gestion-evento/crear-evento/crear-evento.component';
 import { GestionDepartamentoComponent } from './gestion-departamento/gestion-departamento.component';
+import { AsignacionUserDepartamentoComponent } from './asignacion-user-departamento/asignacion-user-departamento.component';
+import { EmpleadosDepartamentoComponent } from './reportes/empleados-departamento/empleados-departamento.component';
+import { AsistenciasDepartamentoComponent } from './reportes/asistencias-departamento/asistencias-departamento.component';
+import { HorasTrabajadasComponent } from './reportes/horas-trabajadas/horas-trabajadas.component';
 
 
 @NgModule({
@@ -43,6 +47,10 @@ import { GestionDepartamentoComponent } from './gestion-departamento/gestion-dep
     EmailValidationDirective,
     LettersDirective,
     NumerosEcuadorPhoneDirective,
+    AsignacionUserDepartamentoComponent,
+    EmpleadosDepartamentoComponent,
+    AsistenciasDepartamentoComponent,
+    HorasTrabajadasComponent,
     
   ],
   exports : [

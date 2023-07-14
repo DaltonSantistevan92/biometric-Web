@@ -2,7 +2,6 @@
 
 <section class="section dashboard">
     <div class="row">
-
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-xxl-3 col-md-6" *ngFor="let item of listaCount">
@@ -22,10 +21,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
 
             <div class="row">
                 <div class="col-12">
@@ -89,7 +84,6 @@
                                             </mat-form-field>
                                         </div>
 
-
                                         <div class="col col-lg-2">
                                             <button (click)="regresionLineal()" [disabled]="formRegresionLineal.invalid"
                                                 class="btn btn btn-outline-primary d-grid mt-2">
@@ -105,19 +99,9 @@
                                     <div id="container"></div>
                                 </figure>
                             </div>
-
-
                         </div>
-
-
-
-
-
                     </div>
-
-
                 </div>
-
             </div>
 
 
@@ -149,25 +133,11 @@
 
                 <div class="col-xxl-6 col-md-6">
                     <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
+                    
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-                            <div>
-                                <canvas id="myChart2"
-                                    style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%; margin-top: 22px"></canvas>
-                            </div>
+                            <h5 class="card-title">Total de Horas Extras por Departamento  <span>| KPI</span></h5>
+                        
+                            <div id="chartDiv" style="max-width: 475px;height: 350px;margin: 0px auto"> </div>
                         </div>
                     </div>
 
@@ -189,7 +159,7 @@
                         </div>
 
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Budget Report <span>| This Month</span></h5>
+                            <h5 class="card-title">Budget Report <span>| KPI</span></h5>
 
                             <div>
                                 <canvas id="myChart3"
@@ -204,3 +174,4 @@
 
     </div>
 </section>
+

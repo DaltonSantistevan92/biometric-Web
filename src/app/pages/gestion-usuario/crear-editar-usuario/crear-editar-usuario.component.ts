@@ -9,6 +9,7 @@ import { errores } from '@pages/gestion-usuario/interfaces/formValidation.interf
 import { GeneralService } from '@app/services/general.service';
 import { ToolService } from '@app/services/tool.service';
 import { UsuarioService } from '@pages/gestion-usuario/usuario.service';
+import { Sexo } from '../interfaces/sexo.interface';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class CrearEditarUsuarioComponent implements OnInit {
   listaRoles: Rol[] = [];
   hide : boolean = true;
 
+  listaSexo : Sexo []=[];
+
   
 
   constructor(
@@ -44,6 +47,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.initFormUsuario();
     this.getTiposRoles();
+    this.mostrarSexo();
     this.setUsuario();
   }
 
@@ -59,19 +63,19 @@ export class CrearEditarUsuarioComponent implements OnInit {
       password: ['', [Validators.required,Validators.minLength(6)]],
       direccion: [''],
       imagen: [''],
+      sexo_id: ['', [Validators.required]]
     });
   }
 
   setUsuario() {
     if (this.data != null) {
-      this.listadoSeleccionado = this.data;
+      this.listadoSeleccionado = this.data; 
       this.serviceImagen(this.data.imagen);
-
       //desestructuracion de objecto
-      const { name, email, imagen, rol_id , persona : { cedula, nombres, apellidos ,num_celular, direccion }  } = this.data;
+      const { name, email, imagen, rol_id , persona : { cedula, nombres, apellidos ,num_celular, direccion , sexo_id}  } = this.data;
     
       //unir las const de todo los objecto desestructurado
-      const data = { name, email, imagen, rol_id , cedula, nombres, apellidos, num_celular, direccion };
+      const data = { name, email, imagen, rol_id , cedula, nombres, apellidos, num_celular, direccion, sexo_id };
       
       //setear el formulario
       this.formUsuario.patchValue(data);
@@ -81,6 +85,13 @@ export class CrearEditarUsuarioComponent implements OnInit {
   getTiposRoles() {
     this._us.getTiposRoles().subscribe({
       next: (resp) => { this.listaRoles = resp.data; },
+      error: (err) => { console.log(err); }
+    });
+  }
+
+  mostrarSexo() {
+    this._us.getSexo().subscribe({
+      next: (resp) => { this.listaSexo = resp.data; },
       error: (err) => { console.log(err); }
     });
   }
@@ -161,7 +172,8 @@ export class CrearEditarUsuarioComponent implements OnInit {
       nombres: form.nombres,
       apellidos: form.apellidos,
       num_celular: form.num_celular,
-      direccion: form.direccion
+      direccion: form.direccion,
+      sexo_id : form.sexo_id
     };
   
     if (form.user_id) {//actualizar
@@ -170,8 +182,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
 
       return { usuario: usuarioConID, persona: personaConID };
     } else {//registrar
-      return { usuario: usuario, persona : persona };
-     
+      return { usuario: usuario, persona : persona }; 
     }
   }
 
@@ -199,6 +210,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
     this.formUsuario.get('imagen')?.setValue('');
 
   }
+  
   serviceImagen(imagen: string) {
     this._ts.mostrarArchivo('usuarios', imagen).subscribe({
       next: (blob) => { this.convertirFileReader(blob) },

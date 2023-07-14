@@ -50,4 +50,5 @@ export interface UserPersonEdSav {
   apellidos?: string;
   num_celular?: string;
   direccion?: string;
+  sexo_id? : number;
 }

@@ -101,7 +101,20 @@
         <mat-label>Dirección</mat-label>
         <input matInput formControlName="direccion" type="text">
       </mat-form-field>
-    </div>  
+    </div> 
+
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Sexo</mat-label>
+        <mat-select formControlName="sexo_id" [ngClass]="{ 'is-invalid': fieldsValidate('sexo_id') }">
+          <mat-option>-- Seleccione un Sexo--</mat-option>
+          <mat-option *ngFor="let lr of listaSexo" [value]="lr.id"> {{ lr.detalle | titlecase }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formUsuario.get('sexo_id')?.errors?.['required']"> El sexo es requerido. </mat-error>
+      </mat-form-field>
+    </div>
+    
+    
   </form>
   
   <div class="row">

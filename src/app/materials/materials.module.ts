@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -34,7 +35,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatChipsModule,
     MatCardModule,
-    TextFieldModule,ReactiveFormsModule
+    TextFieldModule,ReactiveFormsModule,
+    DragDropModule
   ],
   exports : [
     MatFormFieldModule,
@@ -49,7 +51,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatChipsModule,
     MatCardModule,
-    TextFieldModule,ReactiveFormsModule
+    TextFieldModule,ReactiveFormsModule,
+    DragDropModule
   ]
 })
 export class MaterialsModule { }

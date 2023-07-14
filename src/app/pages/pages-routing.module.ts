@@ -8,6 +8,10 @@ import { GestionUsuarioComponent } from '@pages/gestion-usuario/gestion-usuario.
 import { AuthGuard } from '@auth/guards/auth.guard';
 import { GestionEventoComponent } from './gestion-evento/gestion-evento.component';
 import { GestionDepartamentoComponent } from './gestion-departamento/gestion-departamento.component';
+import { AsignacionUserDepartamentoComponent } from './asignacion-user-departamento/asignacion-user-departamento.component';
+import { EmpleadosDepartamentoComponent } from './reportes/empleados-departamento/empleados-departamento.component';
+import { AsistenciasDepartamentoComponent } from './reportes/asistencias-departamento/asistencias-departamento.component';
+import { HorasTrabajadasComponent } from './reportes/horas-trabajadas/horas-trabajadas.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -34,6 +38,26 @@ const routes: Routes = [
       { 
         path : 'registro/departamento', 
         component : GestionDepartamentoComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'registro/asignacion', 
+        component : AsignacionUserDepartamentoComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'reporte/empleados-departamento', 
+        component : EmpleadosDepartamentoComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'reporte/asistencia-departamento', 
+        component : AsistenciasDepartamentoComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'reporte/hora-trabajadas', 
+        component : HorasTrabajadasComponent, 
         canActivate : [AuthGuard]  
       }
     ]

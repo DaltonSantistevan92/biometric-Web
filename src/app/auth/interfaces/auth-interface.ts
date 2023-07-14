@@ -62,6 +62,7 @@ export interface Persona {
   num_celular?: any;
   direccion?: any;
   estado: string;
+  sexo_id : number;
 }
 
 export interface Rol {
