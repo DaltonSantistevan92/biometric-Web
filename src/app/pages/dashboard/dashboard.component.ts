@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
   chart1: any;
 
-
+  bandRegresionLinealAsistencia : boolean = false;
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -70,10 +70,6 @@ export class DashboardComponent implements OnInit {
     this.chartDoughnut();
     this.getAllCount();
     this.cargarTipoAsistencia();
-
-   
-
-
   }
 
 
@@ -116,8 +112,6 @@ export class DashboardComponent implements OnInit {
   chartBar() {
     this._gs.cargartendenciaAsistenciaGlobales().subscribe({
       next: (resp) => {
-
-
         if (resp.data) {
           const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
@@ -163,7 +157,7 @@ export class DashboardComponent implements OnInit {
 
     this.dash_service.horasExtras(fi, ff).subscribe({
       next: (resp) => {
-        console.log(resp);
+        //console.log(resp);
 
         const chart = JSC.chart('chartDiv', { 
           debug: false, 
@@ -284,7 +278,7 @@ export class DashboardComponent implements OnInit {
 
     this.dash_service.regresionLinealAsistencia(temporalidad_id, tipo_asistencia_id, fechaInicio, fechaFin).subscribe({
       next: (resp) => {
-        console.log(resp);
+        //console.log(resp);
 
         if (resp.status) {
 
@@ -332,12 +326,11 @@ export class DashboardComponent implements OnInit {
             }]
           });
 
+        } else {
 
-
+          console.log("No hay proyecciones de asistencias");
 
         }
-
-
       },
       error: (err) => {
         console.log(err);
