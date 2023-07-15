@@ -20,6 +20,8 @@ export class AsistenciasDepartamentoComponent implements OnInit {
 
   asistenciaXdepartamento: any[] = [];
 
+  name_type: any = '';
+
   dataSourceAsistenciaxDepartamentoResponse!: MatTableDataSource<any>;
 
   columnsToDisplayWithExpandUsersResponse: string[] = ['id','fecha','hora', 'tipo_asistencia', 'tipo_registro', 'asistencias_departamento'];
@@ -46,6 +48,7 @@ export class AsistenciasDepartamentoComponent implements OnInit {
   listData(ListasistenciaXdepartamento: any){
     this.asistenciaXdepartamento = [];
     this.asistenciaXdepartamento = ListasistenciaXdepartamento;
+    for(let x of this.asistenciaXdepartamento){ x.tipo_asistencia.id == 1 ? this.name_type = "Departamento": this.name_type = "Nombre del evento";}
     this.dataSourceAsistenciaxDepartamentoResponse = new MatTableDataSource(this.asistenciaXdepartamento);
   }
 
@@ -54,6 +57,10 @@ export class AsistenciasDepartamentoComponent implements OnInit {
       usuario_id: ['', [Validators.required]],
       fecha_inicio : ['',  [Validators.required]],
       fecha_fin : ['',  [Validators.required]],
+      usuario: [''],
+      fecha : [''],
+      hora : [''],
+      
     });
   }
 
@@ -84,6 +91,12 @@ export class AsistenciasDepartamentoComponent implements OnInit {
         if(resp.status){
           console.log(resp.data);
           this.listData(resp.data.asistencias);
+          console.log(resp.data.cabecera.usuario)
+          this.formAD.get('usuario')?.setValue(resp.data.cabecera.usuario);
+          const fecha = new Date();
+
+          this.formAD.get('fecha')?.setValue(fecha);
+
         }
       },
       error: (err) => {

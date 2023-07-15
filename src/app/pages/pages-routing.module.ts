@@ -12,6 +12,7 @@ import { AsignacionUserDepartamentoComponent } from './asignacion-user-departame
 import { EmpleadosDepartamentoComponent } from './reportes/empleados-departamento/empleados-departamento.component';
 import { AsistenciasDepartamentoComponent } from './reportes/asistencias-departamento/asistencias-departamento.component';
 import { HorasTrabajadasComponent } from './reportes/horas-trabajadas/horas-trabajadas.component';
+import { PuntualesAtrasadosComponent } from './reportes/puntuales-atrasados/puntuales-atrasados.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -58,6 +59,11 @@ const routes: Routes = [
       { 
         path : 'reporte/hora-trabajadas', 
         component : HorasTrabajadasComponent, 
+        canActivate : [AuthGuard]  
+      },
+      { 
+        path : 'reporte/puntuales', 
+        component : PuntualesAtrasadosComponent, 
         canActivate : [AuthGuard]  
       }
     ]

@@ -49,6 +49,8 @@ export class HorasTrabajadasComponent implements OnInit {
       usuario_id: ['', [Validators.required]],
       fecha_inicio : ['',  [Validators.required]],
       fecha_fin : ['',  [Validators.required]],
+      fecha : [''],
+      hora : [''],
     });
   }
 
@@ -84,6 +86,9 @@ export class HorasTrabajadasComponent implements OnInit {
         if(resp.length > 0){
           console.log(resp);
           this.listData(resp);
+          const fecha = new Date();
+
+          this.formHT.get('fecha')?.setValue(fecha);
 
         }
       },

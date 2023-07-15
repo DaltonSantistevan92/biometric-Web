@@ -29,6 +29,7 @@ import { AsignacionUserDepartamentoComponent } from './asignacion-user-departame
 import { EmpleadosDepartamentoComponent } from './reportes/empleados-departamento/empleados-departamento.component';
 import { AsistenciasDepartamentoComponent } from './reportes/asistencias-departamento/asistencias-departamento.component';
 import { HorasTrabajadasComponent } from './reportes/horas-trabajadas/horas-trabajadas.component';
+import { PuntualesAtrasadosComponent } from './reportes/puntuales-atrasados/puntuales-atrasados.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { HorasTrabajadasComponent } from './reportes/horas-trabajadas/horas-trab
     EmpleadosDepartamentoComponent,
     AsistenciasDepartamentoComponent,
     HorasTrabajadasComponent,
+    PuntualesAtrasadosComponent,
     
   ],
   exports : [
