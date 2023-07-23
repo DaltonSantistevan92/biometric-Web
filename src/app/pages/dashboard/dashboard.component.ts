@@ -53,21 +53,21 @@ export class DashboardComponent implements OnInit {
 
   chart1: any;
 
-  bandRegresionLinealAsistencia : boolean = false;
+  bandRegresionLinealAsistencia: boolean = false;
 
   constructor(
     private activedRoute: ActivatedRoute,
     private _gs: GeneralService,
     private fb: FormBuilder,
     private dash_service: DashboardService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.listaUrl = this.activedRoute.snapshot.url;
     this.initFormEvento();
     this.chartBar();
     this.donutArcHorasExtras();
-    this.chartDoughnut();
+    this.chartDoughnutKPIObtenerIndiceAtrasoPorDepartamento();
     this.getAllCount();
     this.cargarTipoAsistencia();
   }
@@ -159,74 +159,22 @@ export class DashboardComponent implements OnInit {
       next: (resp) => {
         //console.log(resp);
 
-        const chart = JSC.chart('chartDiv', { 
-          debug: false, 
-          type: 'pie donut', 
-          title: { 
-            position: 'center', 
+        const chart = JSC.chart('chartDiv', {
+          debug: false,
+          type: 'pie donut',
+          title: {
+            position: 'center',
             label_text: ' '
-          }, 
-          legend_position: 'inside right top', 
-          defaultSeries: { 
-            angle: { orientation: 90, sweep: 20 }, 
-            shape: { innerSize: '70%' }, 
+          },
+          legend_position: 'inside right top',
+          defaultSeries: {
+            angle: { orientation: 90, sweep: 20 },
+            shape: { innerSize: '70%' },
             defaultPoint_label_text: '<b>%name</b>'
-          }, 
+          },
           series: resp.series,
           toolbar_visible: false
-        }); 
-
-        // const ctx = document.getElementById('totalHorasExtrasKpi') as HTMLCanvasElement;
-
-        // if (ctx !== null) {
-        //   // const labels = Array.from({ length: 7 }, (_, index) => {
-        //   //   const date = new Date();
-        //   //   date.setMonth(date.getMonth() - index);
-        //   //   return date.toLocaleString('default', { month: 'long' });
-        //   // });
-
-        //   const data = {
-        //     labels: resp.labels,
-        //     datasets: [{
-        //       axis: 'y',
-        //       label: 'My First Dataset',
-        //       data: resp.data,
-        //       fill: false,
-        //       backgroundColor: [
-        //         'rgba(255, 99, 132, 0.2)',
-        //         'rgba(255, 159, 64, 0.2)',
-        //         'rgba(255, 205, 86, 0.2)',
-        //         'rgba(75, 192, 192, 0.2)',
-        //         'rgba(54, 162, 235, 0.2)',
-        //         'rgba(153, 102, 255, 0.2)',
-        //         'rgba(201, 203, 207, 0.2)'
-        //       ],
-        //       borderColor: [
-        //         'rgb(255, 99, 132)',
-        //         'rgb(255, 159, 64)',
-        //         'rgb(255, 205, 86)',
-        //         'rgb(75, 192, 192)',
-        //         'rgb(54, 162, 235)',
-        //         'rgb(153, 102, 255)',
-        //         'rgb(201, 203, 207)'
-        //       ],
-        //       borderWidth: 1
-        //     }]
-        //   };
-
-        //   new Chart(ctx, {
-        //     type: 'bar',
-        //     data,
-        //     options: {
-        //       indexAxis: 'y',
-        //       responsive: true, // Hace que el gráfico sea sensible al tamaño del contenedor
-        //       maintainAspectRatio: false, // Permite que el gráfico cambie su relación de aspecto
-
-        //     }
-        //   });
-        // } else {
-        //   console.error("El elemento no existe en la página");
-        // }
+        });
 
       },
       error: (err) => {
@@ -237,35 +185,40 @@ export class DashboardComponent implements OnInit {
 
 
 
-  chartDoughnut() {
-    const ctx = document.getElementById('myChart3') as HTMLCanvasElement;
+  chartDoughnutKPIObtenerIndiceAtrasoPorDepartamento() {
+    this.dash_service.getKPIObtenerIndiceAtrasoPorDepartamento().subscribe({
+      next : (resp) => {
+        //console.log(resp);
 
-    if (ctx !== null) {
-      const data = {
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
-        datasets: [{
-          label: 'My First Dataset',
-          data: [300, 50, 100],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-          hoverOffset: 4
-        }]
-      };
-
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-      });
-    } else {
-      console.error("El elemento no existe en la página");
-    }
+        if (resp.status) {
+          const ctx = document.getElementById('myChart3') as HTMLCanvasElement;
+  
+          if (ctx !== null) {
+            const data = {
+              labels: resp.data.labels,
+              datasets: [{
+                label: '',
+                data: resp.data.datos,
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+              }]
+            };
+  
+            new Chart(ctx, { type: 'doughnut', data: data });
+          }
+        } else {
+          console.log('no hay datos');
+        }
+      },
+      error : (err) => {
+        console.error(err);
+      }
+    })
+    
 
   }
 

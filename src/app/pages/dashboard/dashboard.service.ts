@@ -5,6 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { Injectable, inject } from '@angular/core';
 import { IntRegrecion } from './interfaces/dashboard.interfaces';
 import { IntHorasExtras } from './interfaces/horas-extras.interface';
+import { IntAtrasoDepar } from './interfaces/indice-atraso.depar.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,11 @@ export class DashboardService {
   horasExtras(fechaInicio:string,fechaFin:string) : Observable<IntHorasExtras>{
     let url = `${this.api}/horasExtrasAgrupadosXDepartamentoKpi/${fechaInicio}/${fechaFin}`;
     return this.http.get<IntHorasExtras>(url);
+  }
+
+  getKPIObtenerIndiceAtrasoPorDepartamento(): Observable<IntAtrasoDepar>{
+    let url = this.api + '/obtenerIndiceAtrasoPorDepartamento';
+    return this.http.get<IntAtrasoDepar>(url);
   }
 
 

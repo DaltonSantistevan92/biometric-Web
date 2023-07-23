@@ -29,6 +29,14 @@
         
       </div>
 
+      <div class="col-md-12">
+
+        <button (click)="exportarPdf()" class="btn btn btn-outline-primary">
+          <i class="fa fa-plus"></i>Exportar a pdf
+        </button>
+      </div>
+
+
       <div class="row">
           <div class="col-md-6">fecha de consulta : {{ formRED.get('fecha')?.value | date: 'yyyy-MM-dd' }}</div>
           <div class="col-md-6">hora de consulta: {{ formRED.get('fecha')?.value | date:'hh:mm a' }}</div>

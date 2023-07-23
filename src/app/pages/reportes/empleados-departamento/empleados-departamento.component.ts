@@ -7,6 +7,8 @@ import { EmpleDeparService } from '../services/emple-depar.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { PdfMakeWrapper, Table, Txt , Img, Cell, Columns , Stack, } from 'pdfmake-wrapper';
+import * as pdfFonts from "pdfmake/build/vfs_fonts"; 
 
 @Component({
   selector: 'app-empleados-departamento',
@@ -48,6 +50,130 @@ export class EmpleadosDepartamentoComponent implements OnInit {
         this.listaUsersResponse = [];
       }
     })
+  }
+
+  toTitleCase(word: string): string {
+    return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+  }
+
+  formatDateToYYYYMMDD(date: Date): string {
+    const isoString = date.toISOString();
+    return isoString.substring(0, 10);
+  }
+
+  formatTimeToHHMMSS(date: Date): string {
+    const ecuadorTimezoneOffset = -5; // Ecuador está en UTC-5
+    const ecuadorTime = new Date(date.getTime() + ecuadorTimezoneOffset * 60 * 60 * 1000);
+    const isoString = ecuadorTime.toISOString();
+    return isoString.substring(11, 19);
+  }
+
+  exportarPdf(){
+    const fechaE = new Date();
+
+    PdfMakeWrapper.setFonts(pdfFonts);
+
+    const tableHeader = [
+      new Txt('N°').bold().alignment('center').fontSize(10) .end,
+      new Txt('Empleado/a').bold().alignment('center').fontSize(10) .end,
+      new Txt('Cargo').bold().alignment('center').fontSize(10) .end,
+      new Txt('Sexo').bold().alignment('center').fontSize(10) .end,
+
+    ];
+    let count = 1;
+
+    const tableDataArray = this.listaUsersResponse.map((item) => [
+      //console.log(count++),
+      new Txt(`${count++}` ).alignment('center').fontSize(10) .end,
+      new Txt(this.toTitleCase(item.persona.nombres) ).alignment('center').fontSize(10) .end,
+      new Txt( this.toTitleCase(item.rol.cargo)).alignment('center').fontSize(10) .end,
+      new Txt( this.toTitleCase(item.persona.sexo.detalle)).alignment('center').fontSize(10) .end,
+
+    ]);
+
+
+    const pdf = new PdfMakeWrapper();
+
+    try{
+
+      pdf.add(
+        new Stack([
+          //new Img(imageBase64).build(),
+          //new Img(imageBase64). ,
+          new Txt('Biometric Web').alignment('center').fontSize(16).bold().color("blue") .end,
+        
+          new Txt('Sistema de Control de Asistencia').alignment('center').fontSize(16).bold().color("blue") .end,
+      ]).end
+      );
+   
+
+      pdf.add(
+        new Columns([
+          new Txt(`Fecha emisión: ${this.formatDateToYYYYMMDD(fechaE)}`).alignment('left').fontSize(10) .end,
+          new Txt(`Hora emisión: ${this.formatTimeToHHMMSS(fechaE)}`).alignment('right').fontSize(10) .end,
+          
+      ]).columnGap(30)
+      .margin(10)
+      .end
+      ); 
+
+      pdf.add(
+        new Txt(
+          "Reporte de Empleados por Departamento"
+        )
+        .alignment('center')
+        .fontSize(14)
+        .bold()
+        .margin(10)
+        .end
+      );
+  
+  
+  
+  
+    
+  
+      pdf.add(
+        new Table([
+          tableHeader,
+          ...tableDataArray
+        ]).widths('*')
+  
+        .alignment('center')
+        .layout({
+        
+          
+          
+          fillColor: (rowIndex) => {
+            // row 0 is the header
+            if (rowIndex === 0) {
+              return '#B5B2B2';
+            }
+    
+            return '#ffffff';
+          },
+          paddingLeft: (rowIndex) => {
+            if(rowIndex === 0){
+              return 0;
+            }
+  
+            return 8
+          }
+          
+        })
+        //.widths([100, 150, '*', 100])
+        .end
+      ); 
+     
+  
+      
+      pdf.create().open();
+
+
+    }catch (error){
+      console.error('Error al generar el PDF:', error);
+    }
+
   }
 
   intForm(){
