@@ -10,7 +10,7 @@
                         <mat-select formControlName="usuario_id">
                             <mat-option>-- Seleccione un usuario --</mat-option>
                             <mat-option *ngFor="let u of listaUsuarios" [value]="u.id">
-                                {{u.persona.nombres | titlecase }} {{u.persona.nombres | titlecase }} - {{u.rol.cargo | titlecase}}
+                                {{u.persona.nombres | titlecase }} {{u.persona.apellidos | titlecase }} - {{u.rol.cargo | titlecase}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="formHT.get('usuario_id')?.errors?.['required']">

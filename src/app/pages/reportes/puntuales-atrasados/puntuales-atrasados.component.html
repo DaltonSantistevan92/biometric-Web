@@ -52,73 +52,84 @@
         </form>
     </div>
 
-    <div class="col-md-12">
-        <!-- cabecera -->
-        <img src="assets/img/logo.png" alt="">
-        
-        
-    </div>
+    <ng-container *ngIf="listaPuntualesAtrasadosXasistencia.length >0">
 
-    <div class="row">
-        <div class="col-md-6">Fecha de consulta : {{ formAP.get('fecha')?.value | date: 'yyyy-MM-dd' }}</div>
-        <div class="col-md-6">Hora de consulta: {{ formAP.get('fecha')?.value | date:'hh:mm a' }}</div>
-    </div>
-
-    <br>
-
-    <div >
-        <div>
-            <div >
-                <table mat-table [dataSource]="dataSourceAtrasadosPuntualesxAsistenciaResponse" multiTemplateDataRows matSort>
+        <div class="col-md-12">
+            <!-- cabecera -->
+            <img src="assets/img/logo.png" alt="">
             
-                    <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> N° </th>
-                    <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="id_usuario">
-                        <th mat-header-cell *matHeaderCellDef> ID </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.user_id  }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="usuario">
-                        <th mat-header-cell *matHeaderCellDef> Usuario </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.usuarios  }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="tipo">
-                        <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.tipo  }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="tipoAsistencia">
-                        <th mat-header-cell *matHeaderCellDef> Tipo asistencia </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.tipoAsistencia  }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="fecha">
-                        <th mat-header-cell *matHeaderCellDef> Fecha </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.fecha  }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="hora">
-                        <th mat-header-cell *matHeaderCellDef> Hora </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.hora  }}</td>
-                    </ng-container>
-
-
-                    
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandUsersResponse"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandUsersResponse;"></tr>
-                </table>
-                <!-- <mat-paginator #MatPaginatorUsersResponse [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-            </div>
+            
         </div>
 
-    
-    
-    
-    </div>
+        <div class="col-md-12">
+
+            <button (click)="exportarPdf()" class="btn btn btn-outline-primary">
+            <i class="fa fa-plus"></i>Exportar a pdf
+            </button>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">Fecha de consulta : {{ formAP.get('fecha')?.value | date: 'yyyy-MM-dd' }}</div>
+            <div class="col-md-6">Hora de consulta: {{ formAP.get('fecha')?.value | date:'hh:mm a' }}</div>
+        </div>
+
+        <br>
+
+        <div >
+            <div>
+                <div >
+                    <table mat-table [dataSource]="dataSourceAtrasadosPuntualesxAsistenciaResponse" multiTemplateDataRows matSort>
+                
+                        <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> N° </th>
+                        <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="id_usuario">
+                            <th mat-header-cell *matHeaderCellDef> ID </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.user_id  }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="usuario">
+                            <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.usuarios  }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tipo">
+                            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.tipo  }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tipoAsistencia">
+                            <th mat-header-cell *matHeaderCellDef> Tipo asistencia </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.tipoAsistencia  }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fecha">
+                            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.fecha  }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="hora">
+                            <th mat-header-cell *matHeaderCellDef> Hora </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.hora  }}</td>
+                        </ng-container>
+
+
+                        
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandUsersResponse"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandUsersResponse;"></tr>
+                    </table>
+                    <!-- <mat-paginator #MatPaginatorUsersResponse [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                </div>
+            </div>
+
+        
+        
+        
+        </div>
+    </ng-container>
 
 </div>
 

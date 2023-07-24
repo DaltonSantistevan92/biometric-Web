@@ -91,6 +91,11 @@ export class HorasTrabajadasComponent implements OnInit {
   }
 
   exportarPdf(){
+
+    console.log("Usuario activo: ", this.formHT.value.usuario_id)
+
+    let us = this.listaUsuarios.find(u =>  u.id === this.formHT.value.usuario_id )
+    console.log(us)
     const fechaE = new Date();
 
     PdfMakeWrapper.setFonts(pdfFonts);
@@ -124,37 +129,62 @@ export class HorasTrabajadasComponent implements OnInit {
         new Stack([
           //new Img(imageBase64).build(),
           //new Img(imageBase64). ,
-          new Txt('Biometric Web').alignment('center').fontSize(16).bold().color("blue") .end,
+          new Txt('BIOMETRIC WEB').alignment('center').fontSize(14).bold() .end,
         
-          new Txt('Sistema de Control de Asistencia').alignment('center').fontSize(16).bold().color("blue") .end,
+          new Txt('Sistema de Control de Asistencia').alignment('center').fontSize(14).bold() .end,
       ]).end
       );
    
 
-      pdf.add(
-        new Columns([
-          new Txt(`Fecha emisión: ${this.formatDateToYYYYMMDD(fechaE)}`).alignment('left').fontSize(10) .end,
-          new Txt(`Hora emisión: ${this.formatTimeToHHMMSS(fechaE)}`).alignment('right').fontSize(10) .end,
-          
-      ]).columnGap(30)
-      .margin(10)
-      .end
-      ); 
+      
 
       pdf.add(
         new Txt(
-          "REPORTE DE HORAS TRABAJADAS"
+          "Reporte de Horas Trabajadas por Usuario"
         )
+        .color("blue")
         .alignment('center')
         .fontSize(14)
         .bold()
-        .margin(10)
+        .margin(5)
         .end
       );
-  
-  
-  
-  
+
+      pdf.add(
+        new Stack([
+          new Txt([
+            new Txt('Reporte desde: ').fontSize(10).bold().end,
+            new Txt(`${this.formHT.value.fecha_inicio}`).alignment('left').fontSize(10) .end,
+          ]).end,
+          new Txt([
+            new Txt('Reporte hasta:  ').fontSize(10).bold().end,
+            new Txt(`${this.formHT.value.fecha_fin}`).alignment('left').fontSize(10) .end,
+          ]).end,
+          new Txt([
+            new Txt('Cedula: ').fontSize(10).bold().end,
+            new Txt(`             ${us.persona.cedula}`).alignment('left').fontSize(10) .end,
+     
+          ]).end,
+          new Txt([
+            new Txt('Nombres:').fontSize(10).bold().end,
+            new Txt(`           ${this.toTitleCase(us.persona.nombres)} ${ this.toTitleCase(us.persona.apellidos)} `).alignment('left').fontSize(10) .end,
+     
+          ]).end,
+          new Txt([
+           " "
+     
+          ]).margin(4).end,
+          
+        ])
+        .margin(0)
+        .end,
+
+      );
+
+
+      
+
+
     
   
       pdf.add(
@@ -162,7 +192,7 @@ export class HorasTrabajadasComponent implements OnInit {
           tableHeader,
           ...tableDataArray
         ]).widths('*')
-  
+        
         .alignment('center')
         .layout({
         
@@ -188,6 +218,16 @@ export class HorasTrabajadasComponent implements OnInit {
         //.widths([100, 150, '*', 100])
         .end
       ); 
+
+      pdf.add(
+        new Columns([
+          new Txt(`Fecha emisión: ${this.formatDateToYYYYMMDD(fechaE)}`).alignment('left').fontSize(10) .end,
+          new Txt(`Hora emisión: ${this.formatTimeToHHMMSS(fechaE)}`).alignment('right').fontSize(10) .end,
+          
+      ]).columnGap(30)
+      .margin(10)
+      .end
+      ); 
      
   
       
@@ -207,11 +247,11 @@ export class HorasTrabajadasComponent implements OnInit {
   
   consultar(){
 
-    const form = this.formHT.value;
+    let form = this.formHT.value;
     let usuario_id = parseInt(form.usuario_id);
     let fecha_inicio = form.fecha_inicio;
     let fecha_fin = form.fecha_fin;
-
+    console.log(usuario_id)
 
     this.horasTra_service.consultarHorasTrabajadas(usuario_id, fecha_inicio, fecha_fin).subscribe({
       next: (resp) => {
